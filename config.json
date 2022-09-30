@@ -1,0 +1,19 @@
+{
+    "name": "Project 3D statistics",
+    "version": "2.0.0",
+    "description": "Detailed statistics for all classes in pointcloud or episodes project",
+    "categories": [
+        "pointclouds",
+        "exploration",
+        "statistics"
+    ],
+    "icon": "",
+    "poster": "",
+    "context_menu": {
+      "target": ["point_cloud_project", "point_cloud_episodes_project"]
+    },
+    "min_agent_version": "6.6.7",
+    "min_instance_version": "6.5.38",
+    "entrypoint": "python -m uvicorn src.main:app --host 0.0.0.0 --port 8000",
+    "port": 8000
+  }
