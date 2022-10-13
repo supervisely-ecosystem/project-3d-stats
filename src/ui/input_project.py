@@ -9,6 +9,7 @@ from supervisely.app.widgets import (
 )
 import src.globals as g
 import src.ui.table_pointclouds as pointclouds
+import src.ui.table_classes as classes
 
 select_project = SelectProject(g.project_id)
 project_thumbnail = ProjectThumbnail(g.project_info)
@@ -68,3 +69,6 @@ def download():
     pointclouds.card.uncollapse()
     pointclouds.card.unlock()
     pointclouds.build_table(download_progress)
+    classes.card.uncollapse()
+    classes.card.unlock()
+    classes.build_table(download_progress)
