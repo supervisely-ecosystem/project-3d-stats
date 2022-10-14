@@ -48,8 +48,12 @@ def build_table(progress, round_floats=4):
     table.loading = True
 
     with progress(message=f"Calculating labels stats...", total=g.project_fs.total_items) as pbar:
+        ds_infos = g.api.dataset.get_list(g.project_id)
         for ds in g.project_fs.datasets:
-            ds_id = g.project_fs.key_id_map.get_video_id(ds.key())
+            ds_id = None
+            for ds_info in ds_infos:
+                if ds_info.name == ds.name:
+                    ds_id = ds_info.id
 
             if g.project_type == str(sly.ProjectType.POINT_CLOUDS):
                 ptc_infos = g.api.pointcloud.get_list(ds_id)
@@ -101,7 +105,7 @@ def build_table(progress, round_floats=4):
                     volume = size.x * size.y * size.z
 
                     points_inside = pcd_np[
-                          (pcd_np[:, 0] >= pos.x - size.x * 0.5)
+                        (pcd_np[:, 0] >= pos.x - size.x * 0.5)
                         & (pcd_np[:, 0] <= pos.x + size.x * 0.5)
                         & (pcd_np[:, 1] >= pos.y - size.y * 0.5)
                         & (pcd_np[:, 1] <= pos.y + size.y * 0.5)

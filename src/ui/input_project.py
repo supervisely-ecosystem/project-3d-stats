@@ -11,6 +11,7 @@ import src.globals as g
 import src.ui.table_pointclouds as pointclouds
 import src.ui.table_classes as classes
 import src.ui.table_labels as labels
+import src.ui.table_datasets as datasets
 
 select_project = SelectProject(g.project_id)
 project_thumbnail = ProjectThumbnail(g.project_info)
@@ -76,3 +77,6 @@ def download():
     labels.card.uncollapse()
     labels.card.unlock()
     labels.build_table(download_progress)
+    datasets.card.uncollapse()
+    datasets.card.unlock()
+    datasets.build_table(download_progress)

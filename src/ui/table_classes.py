@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 from supervisely.video_annotation.key_id_map import KeyIdMap
 from supervisely.geometry.cuboid_3d import Cuboid3d
+from src.ui.utils import get_agg_stats
 
 lines = None
 cols = [
@@ -37,20 +38,6 @@ card = Card(
     lock_message=START_LOCK_MESSAGE,
 )
 card.lock()
-
-
-def get_agg_stats(array, round_value, agg="mean"):
-    if not len(array):
-        return "-"
-    if agg == "mean":
-        np_array = np.array(array).mean()
-    elif agg == "min":
-        np_array = np.array(array).min()
-    elif agg == "max":
-        np_array = np.array(array).max()
-    elif agg == "std":
-        np_array = np.array(array).std()
-    return round(np_array, round_value)
 
 
 def build_table(progress, round_floats=4):
