@@ -147,6 +147,7 @@ def build_table(progress, round_floats=4):
 
                     if num_objects_class[obj_class.name] != 0:
                         class_stats[obj_class.name]["poinclouds count"] += 1
+                pbar.update()
 
     for obj_class in g.project_meta.obj_classes:
         class_stats[obj_class.name]["average object volume"] = get_agg_stats(

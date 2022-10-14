@@ -10,7 +10,8 @@ from supervisely.app.widgets import Container
 import src.ui.input_project as input_project
 import src.ui.table_pointclouds as pointclouds
 import src.ui.table_classes as classes
+import src.ui.table_labels as labels
 
-settings = Container([input_project.card, pointclouds.card, classes.card])
+settings = Container([input_project.card, pointclouds.card, classes.card, labels.card])
 
 app = sly.Application(layout=settings)
