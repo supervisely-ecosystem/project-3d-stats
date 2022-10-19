@@ -17,7 +17,9 @@ select_project = SelectProject(g.project_id)
 project_thumbnail = ProjectThumbnail(g.project_info)
 project_thumbnail.hide()
 download_btn = Button("DOWNLOAD PROJECT AND CALCULATE STATS", icon="zmdi zmdi-download")
-download_progress = SlyTqdm()
+progress = SlyTqdm()
+progress.hide()
+
 finish_msg = sly.app.widgets.Text("Stats have been calculated successfully.", status="success")
 finish_msg.hide()
 
@@ -26,57 +28,71 @@ card = Card(
     "Select project to show stats",
     collapsable=True,
     content=Container(
-        [select_project, project_thumbnail, download_progress, download_btn, finish_msg]
+        [
+            select_project,
+            project_thumbnail,
+            progress,
+            download_btn,
+            finish_msg,
+        ]
     ),
 )
 
 
 @download_btn.click
 def download():
+    progress.show()
+    pbar = progress(
+        message=f"Downloading pointcloud episodes project...",
+        total=g.project_info.items_count,
+    )
     if not sly.fs.dir_exists(g.project_dir):
         sly.fs.mkdir(g.project_dir)
-        with download_progress(
-            message=f"Downloading project...", total=g.project_info.items_count
-        ) as pbar:
-            if g.project_type == str(sly.ProjectType.POINT_CLOUD_EPISODES):
-                sly.download_pointcloud_episode_project(
-                    g.api,
-                    g.project_id,
-                    g.project_dir,
-                    dataset_ids=None,
-                    download_related_images=False,
-                    log_progress=False,
-                    progress_cb=pbar.update,
-                )
-            elif g.project_type == str(sly.ProjectType.POINT_CLOUDS):
-                sly.download_pointcloud_project(
-                    g.api,
-                    g.project_id,
-                    g.project_dir,
-                    dataset_ids=None,
-                    log_progress=False,
-                    progress_cb=pbar.update,
-                )
-    if g.project_type == str(sly.ProjectType.POINT_CLOUD_EPISODES):
-        g.project_fs = sly.PointcloudEpisodeProject(g.project_dir, sly.OpenMode.READ)
-    elif g.project_type == str(sly.ProjectType.POINT_CLOUDS):
-        g.project_fs = sly.PointcloudProject(g.project_dir, sly.OpenMode.READ)
+        if g.project_type == str(sly.ProjectType.POINT_CLOUD_EPISODES):
+            g.project_fs = sly.download_pointcloud_episode_project(
+                g.api,
+                g.project_id,
+                g.project_dir,
+                dataset_ids=None,
+                download_related_images=False,
+                log_progress=True,
+                save_pointcloud_info=True,
+                progress_cb=pbar.update,
+            )
+        elif g.project_type == str(sly.ProjectType.POINT_CLOUDS):
+            g.project_fs = sly.download_pointcloud_project(
+                g.api,
+                g.project_id,
+                g.project_dir,
+                dataset_ids=None,
+                log_progress=True,
+                save_pointcloud_info=True,
+                progress_cb=pbar.update,
+            )
+    else:
+        if g.project_type == str(sly.ProjectType.POINT_CLOUD_EPISODES):
+            g.project_fs = sly.PointcloudEpisodeProject(g.project_dir, sly.OpenMode.READ)
+        elif g.project_type == str(sly.ProjectType.POINT_CLOUDS):
+            g.project_fs = sly.PointcloudProject(g.project_dir, sly.OpenMode.READ)
+
+    pbar.clear()
 
     g.project_meta = g.project_fs.meta
     sly.logger.info(f"Project data: {g.project_fs.total_items} point clouds")
     select_project.hide()
     download_btn.hide()
+    progress.hide()
     project_thumbnail.show()
-    finish_msg.show()
     pointclouds.card.uncollapse()
     pointclouds.card.unlock()
-    pointclouds.build_table(download_progress)
+    pointclouds.build_table()
     classes.card.uncollapse()
     classes.card.unlock()
-    classes.build_table(download_progress)
+    classes.build_table()
     labels.card.uncollapse()
     labels.card.unlock()
-    labels.build_table(download_progress)
+    labels.build_table()
     datasets.card.uncollapse()
     datasets.card.unlock()
-    datasets.build_table(download_progress)
+    datasets.build_table()
+    finish_msg.show()

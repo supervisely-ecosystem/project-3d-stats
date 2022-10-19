@@ -12,5 +12,7 @@ project_meta: sly.ProjectMeta = None
 data_dir = sly.app.get_data_dir()
 sly.logger.info(f"Data directory: {data_dir}")
 
+# sly.fs.clean_dir(data_dir)
+
 project_dir = os.path.join(data_dir, "sly_project")
 project_fs: Union[sly.PointcloudEpisodeProject, sly.PointcloudProject] = None
