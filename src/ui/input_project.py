@@ -14,8 +14,8 @@ import src.ui.table_labels as labels
 import src.ui.table_datasets as datasets
 
 select_project = SelectProject(g.project_id)
-project_thumbnail = ProjectThumbnail(g.project_info)
-project_thumbnail.hide()
+# project_thumbnail = ProjectThumbnail(g.project_info)
+# project_thumbnail.hide()
 download_btn = Button("DOWNLOAD PROJECT AND CALCULATE STATS", icon="zmdi zmdi-download")
 progress = SlyTqdm()
 progress.hide()
@@ -30,7 +30,7 @@ card = Card(
     content=Container(
         [
             select_project,
-            project_thumbnail,
+            # project_thumbnail,
             progress,
             download_btn,
             finish_msg,
@@ -83,10 +83,10 @@ def download():
 
     g.project_meta = g.project_fs.meta
     sly.logger.info(f"Project data: {g.project_fs.total_items} point clouds")
-    select_project.hide()
+    select_project.disable()
     download_btn.hide()
     progress.hide()
-    project_thumbnail.show()
+    # project_thumbnail.show()
     pointclouds.card.uncollapse()
     pointclouds.card.unlock()
     pointclouds.build_table()
