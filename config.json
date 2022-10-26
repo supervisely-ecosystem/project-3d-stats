@@ -7,8 +7,8 @@
         "exploration",
         "statistics"
     ],
-    "icon": "",
-    "poster": "",
+    "icon": "https://github.com/supervisely-ecosystem/project-3d-stats/releases/download/v0.0.0/icon_3d_stats.png",
+    "poster": "https://github.com/supervisely-ecosystem/project-3d-stats/releases/download/v0.0.0/poster_3d_stats.png",
     "context_menu": {
       "target": ["point_cloud_project", "point_cloud_episodes_project"]
     },

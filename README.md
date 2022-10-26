@@ -1,6 +1,6 @@
 <div align="center" markdown>
 
-<img src=""/>
+<img src="https://github.com/supervisely-ecosystem/project-3d-stats/releases/download/v0.0.0/poster_3d_stats.png"/>
 
 # Project 3D statistics
 
