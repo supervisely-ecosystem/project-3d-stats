@@ -42,40 +42,44 @@ card = Card(
 @download_btn.click
 def download():
     progress.show()
-    pbar = progress(
-        message=f"Downloading pointcloud episodes project...",
-        total=g.project_info.items_count,
-    )
     if not sly.fs.dir_exists(g.project_dir):
         sly.fs.mkdir(g.project_dir)
         if g.project_type == str(sly.ProjectType.POINT_CLOUD_EPISODES):
-            g.project_fs = sly.download_pointcloud_episode_project(
-                g.api,
-                g.project_id,
-                g.project_dir,
-                dataset_ids=None,
-                download_related_images=False,
-                log_progress=True,
-                save_pointcloud_info=True,
-                progress_cb=pbar.update,
-            )
+            with progress(
+                message="Downloading pointcloud episodes project...",
+                total=g.project_info.items_count,
+            ) as pbar:
+                sly.PointcloudEpisodeProject.download(
+                    g.api,
+                    g.project_id,
+                    g.project_dir,
+                    dataset_ids=None,
+                    download_pointclouds=True,
+                    download_related_images=True,
+                    download_pointclouds_info=True,
+                    log_progress=True,
+                    progress_cb=pbar.update,
+                )
         elif g.project_type == str(sly.ProjectType.POINT_CLOUDS):
-            g.project_fs = sly.download_pointcloud_project(
-                g.api,
-                g.project_id,
-                g.project_dir,
-                dataset_ids=None,
-                log_progress=True,
-                save_pointcloud_info=True,
-                progress_cb=pbar.update,
-            )
-    else:
-        if g.project_type == str(sly.ProjectType.POINT_CLOUD_EPISODES):
-            g.project_fs = sly.PointcloudEpisodeProject(g.project_dir, sly.OpenMode.READ)
-        elif g.project_type == str(sly.ProjectType.POINT_CLOUDS):
-            g.project_fs = sly.PointcloudProject(g.project_dir, sly.OpenMode.READ)
-
-    pbar.clear()
+            with progress(
+                message="Downloading pointcloud project...",
+                total=g.project_info.items_count,
+            ) as pbar:
+                sly.PointcloudProject.download(
+                    g.api,
+                    g.project_id,
+                    g.project_dir,
+                    dataset_ids=None,
+                    log_progress=True,
+                    download_pointclouds=True,
+                    download_related_images=True,
+                    download_pointclouds_info=True,
+                    progress_cb=pbar.update,
+                )
+    if g.project_type == str(sly.ProjectType.POINT_CLOUD_EPISODES):
+        g.project_fs = sly.PointcloudEpisodeProject(g.project_dir, sly.OpenMode.READ)
+    elif g.project_type == str(sly.ProjectType.POINT_CLOUDS):
+        g.project_fs = sly.PointcloudProject(g.project_dir, sly.OpenMode.READ)
 
     g.project_meta = g.project_fs.meta
     sly.logger.info(f"Project data: {g.project_fs.total_items} point clouds")
