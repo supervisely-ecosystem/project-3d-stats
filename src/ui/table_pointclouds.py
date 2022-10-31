@@ -16,7 +16,8 @@ lines = None
 cols = [
     "id",
     "link",
-    "dataset",
+    "dataset id",
+    "dataset name",
     "points count",
     "objects count",
     "related images count",
@@ -62,6 +63,9 @@ def build_table(round_floats=4):
             for ds_info in ds_infos:
                 if ds_info.name == ds.name:
                     ds_id = ds_info.id
+            if g.project_type == str(sly.ProjectType.POINT_CLOUD_EPISODES):
+                ds: PointcloudEpisodeDataset
+                ann: PointcloudEpisodeAnnotation = ds.get_ann(g.project_meta)
             for item_name in ds:
                 paths = ds.get_item_paths(item_name)
                 ptc_path = paths.pointcloud_path
@@ -79,7 +83,7 @@ def build_table(round_floats=4):
                     )
                 elif g.project_type == str(sly.ProjectType.POINT_CLOUD_EPISODES):
                     ds: PointcloudEpisodeDataset
-                    ann: PointcloudEpisodeAnnotation = ds.get_ann(g.project_meta)
+                    ann: PointcloudEpisodeAnnotation
                     frame_idx = ds.get_frame_idx(item_name)
                     objs = ann.get_objects_on_frame(frame_idx)
                     tags = ann.get_tags_on_frame(frame_idx)
@@ -127,6 +131,7 @@ def build_table(round_floats=4):
                         item_info.id,
                         labeling_tool_link,
                         ds_id,
+                        ds.name,
                         len(pcd_np),
                         num_objects,
                         len(rel_images),

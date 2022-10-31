@@ -73,6 +73,20 @@ def build_table(round_floats=4):
 
     with progress(message=f"Calculating classes stats...", total=g.project_fs.total_items) as pbar:
         for ds in g.project_fs.datasets:
+            if g.project_type == str(sly.ProjectType.POINT_CLOUD_EPISODES):
+                ds: PointcloudEpisodeDataset
+                ann: PointcloudEpisodeAnnotation = ds.get_ann(g.project_meta)
+                objs = ann.objects
+
+                num_objects_class = {}
+                for obj_class in g.project_meta.obj_classes:
+                    num_objects_class[obj_class.name] = 0
+                for obj in objs:
+                    num_objects_class[obj.obj_class.name] += 1
+                for obj_class in g.project_meta.obj_classes:
+                    class_stats[obj_class.name]["objects count"] += num_objects_class[
+                        obj_class.name
+                    ]
             for item_name in ds:
                 if g.project_type == str(sly.ProjectType.POINT_CLOUDS):
                     ds: PointcloudDataset
@@ -82,13 +96,13 @@ def build_table(round_floats=4):
 
                 elif g.project_type == str(sly.ProjectType.POINT_CLOUD_EPISODES):
                     ds: PointcloudEpisodeDataset
-                    ann: PointcloudEpisodeAnnotation = ds.get_ann(g.project_meta)
+                    ann: PointcloudEpisodeAnnotation
                     frame_idx = ds.get_frame_idx(item_name)
-                    objs = ann.get_objects_on_frame(frame_idx)
                     figs = ann.get_figures_on_frame(frame_idx)
+                    objs = ann.get_objects_on_frame(frame_idx)
 
-                num_objects_class = {}
                 num_figures_class = {}
+                num_objects_class = {}
                 for obj_class in g.project_meta.obj_classes:
                     num_objects_class[obj_class.name] = 0
                     num_figures_class[obj_class.name] = 0
@@ -116,12 +130,14 @@ def build_table(round_floats=4):
                     class_stats[obj_class.name]["objects count per pointcloud"].append(
                         num_objects_class[obj_class.name]
                     )
-                    class_stats[obj_class.name]["objects count"] += num_objects_class[
-                        obj_class.name
-                    ]
                     class_stats[obj_class.name]["figures count"] += num_figures_class[
                         obj_class.name
                     ]
+
+                    if g.project_type == str(sly.ProjectType.POINT_CLOUDS):
+                        class_stats[obj_class.name]["objects count"] += num_objects_class[
+                            obj_class.name
+                        ]
 
                     if num_objects_class[obj_class.name] != 0:
                         class_stats[obj_class.name]["poinclouds count"] += 1

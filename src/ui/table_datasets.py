@@ -88,6 +88,9 @@ def build_table(round_floats=4):
             num_objects_class = {}
             for obj_class in g.project_meta.obj_classes:
                 num_objects_class[obj_class.name] = 0
+            if g.project_type == str(sly.ProjectType.POINT_CLOUD_EPISODES):
+                ds: PointcloudEpisodeDataset
+                ann: PointcloudEpisodeAnnotation = ds.get_ann(g.project_meta)
             for item_name in ds:
                 paths = ds.get_item_paths(item_name)
                 ptc_path = paths.pointcloud_path
@@ -101,7 +104,7 @@ def build_table(round_floats=4):
 
                 elif g.project_type == str(sly.ProjectType.POINT_CLOUD_EPISODES):
                     ds: PointcloudEpisodeDataset
-                    ann: PointcloudEpisodeAnnotation = ds.get_ann(g.project_meta)
+                    ann: PointcloudEpisodeAnnotation
                     frame_idx = ds.get_frame_idx(item_name)
                     objs = ann.get_objects_on_frame(frame_idx)
                     if not len(objs):

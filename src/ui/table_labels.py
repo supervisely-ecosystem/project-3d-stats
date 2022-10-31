@@ -63,7 +63,9 @@ def build_table(round_floats=4):
             for ds_info in ds_infos:
                 if ds_info.name == ds.name:
                     ds_id = ds_info.id
-
+            if g.project_type == str(sly.ProjectType.POINT_CLOUD_EPISODES):
+                ds: PointcloudEpisodeDataset
+                ann: PointcloudEpisodeAnnotation = ds.get_ann(g.project_meta)
             for item_name in ds:
                 item_info = ds.get_pointcloud_info(item_name)
                 paths = ds.get_item_paths(item_name)
@@ -78,7 +80,7 @@ def build_table(round_floats=4):
                     )
                 elif g.project_type == str(sly.ProjectType.POINT_CLOUD_EPISODES):
                     ds: PointcloudEpisodeDataset
-                    ann: PointcloudEpisodeAnnotation = ds.get_ann(g.project_meta)
+                    ann: PointcloudEpisodeAnnotation
                     frame_idx = ds.get_frame_idx(item_name)
                     figs = ann.get_figures_on_frame(frame_idx)
 
