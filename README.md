@@ -30,6 +30,30 @@ Application generates report with detailed general and per pointcloud statistics
 4. Look at the statistics from the tables at **Steps 2-5**, get the information you need
 5. Stop the app manually
 
+# Some columns of Tables
+
+### 1. **Pointclouds** table
+- **RELATED IMAGES COUNT** - Photocontext images count of pointcloud (see in Labeling tool from **LINK** column)
+- **TAGS** - Tags of pointcloud (objects tags not included). 
+- **SIZE X/Y/Z** - Pointcloud width, length and height (difference between max point coordinate value along the axis and min point coordinate value). 
+- **MIN/MAX X/Y/Z** - Min or max point coordinate value along the axis X, Y or Z.
+
+### 2. **CLASSES** table
+- **POINTCLOUDS COUNT** - Number of pointclouds containing at least one figure of class.
+- **AVERAGE SIZE X/Y/Z** - Average width, length and height of class figures.
+- **POSITION X/Y/Z MIN/MAX** - Min or max coordinate value of class figures center along the axis X, Y or Z.
+
+### 3. **LABELS** table
+- **VOLUME** - Figure volume (width * length * height).
+- **POINTS INSIDE** - Number of points of pointcloud inside the figure.
+- **SIZE X/Y/Z** - Figure width, length and height.
+- **POSITION X/Y/Z** - Center of figure coordinates.
+- **ROTATION DX/DY/DZ** - Rotation around the axis X,Y or Z [-pi; +pi] 
+
+### 4. **DATASETS** table
+- **AVERAGE SIZE X/Y/Z** - Average point cloud width, length and height in the dataset (average difference between max point coordinate value along the axis and min point coordinate value).
+- **AVERAGE MIN/MAX X/Y/Z** - Average min or max point coordinates value along the axis X, Y or Z.
+
 # Screenshot
 
 <img src="https://user-images.githubusercontent.com/97401023/199062614-f1620363-b817-40c5-81f0-a95f219dec6e.png">
