@@ -32,7 +32,7 @@ Application generates report with detailed general and per pointcloud statistics
 
 # Some columns of Tables
 
-### 1. **Pointclouds** table
+### 1. **POINTCLOUDS** table
 - **RELATED IMAGES COUNT** - Photocontext images count of pointcloud (see in Labeling tool from **LINK** column)
 - **TAGS** - Tags of pointcloud (objects tags not included). 
 - **SIZE X/Y/Z** - Pointcloud width, length and height (difference between max point coordinate value along the axis and min point coordinate value). 
@@ -56,4 +56,4 @@ Application generates report with detailed general and per pointcloud statistics
 
 # Screenshot
 
-<img src="https://user-images.githubusercontent.com/97401023/199062614-f1620363-b817-40c5-81f0-a95f219dec6e.png">
+<img src="https://user-images.githubusercontent.com/97401023/199076648-690a659c-124d-4529-ac56-097a2fa907d1.png">
