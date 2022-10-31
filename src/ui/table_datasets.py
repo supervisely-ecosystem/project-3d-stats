@@ -41,7 +41,7 @@ START_LOCK_MESSAGE = "Please wait..."
 card = Card(
     "5️⃣ Datasets",
     collapsable=True,
-    content=Container([progress, table]),
+    content=Container([progress, table], gap=0),
     lock_message=START_LOCK_MESSAGE,
 )
 card.lock()
@@ -181,7 +181,6 @@ def build_table(round_floats=4):
         *bold_text(total_pcd_ranges),
         *bold_text(total_num_objects_class),
     ]
-    # TODO: to the end of table
-    table.insert_row(total_row, 0)
+    table.summary_row = total_row
     table.loading = False
     progress.hide()

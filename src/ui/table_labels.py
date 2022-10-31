@@ -43,7 +43,7 @@ START_LOCK_MESSAGE = "Please wait..."
 card = Card(
     "4️⃣ Labels (Figures)",
     collapsable=True,
-    content=Container([progress, table]),
+    content=Container([progress, table], gap=0),
     lock_message=START_LOCK_MESSAGE,
 )
 card.lock()
