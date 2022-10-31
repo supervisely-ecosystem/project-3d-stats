@@ -32,4 +32,4 @@ Application generates report with detailed general and per pointcloud statistics
 
 # Screenshot
 
-<img src="">
+<img src="https://user-images.githubusercontent.com/97401023/199062614-f1620363-b817-40c5-81f0-a95f219dec6e.png">
