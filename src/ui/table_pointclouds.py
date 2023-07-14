@@ -98,7 +98,7 @@ def build_table(round_floats=4):
                 tag_names = ""
                 for tag in tags:
                     name_type_val = tag.get_row_ptable()
-                    tag_names += f"{name_type_val[0]}{':'+name_type_val[2] if name_type_val[2] is not None else ''},"
+                    tag_names += f"{name_type_val[0]}{':'+str(name_type_val[2]) if name_type_val[2] is not None else ''},"
                 if tag_names != "":
                     tag_names = tag_names[:-1]
                 else:
