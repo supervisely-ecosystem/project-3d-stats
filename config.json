@@ -2,6 +2,7 @@
     "name": "Project 3D statistics",
     "version": "2.0.0",
     "description": "Detailed statistics for all classes in pointcloud or episodes project",
+    "docker_image": "supervisely/pointcloud:1.0.0",
     "categories": [
         "pointclouds",
         "visualization",
