@@ -2,7 +2,7 @@
     "name": "Project 3D statistics",
     "version": "2.0.0",
     "description": "Detailed statistics for all classes in pointcloud or episodes project",
-    "docker_image": "supervisely/pointcloud:1.0.0",
+    "docker_image": "supervisely/visualization-stats:0.0.1",
     "categories": [
         "pointclouds",
         "visualization",
@@ -13,10 +13,13 @@
     "icon": "https://github.com/supervisely-ecosystem/project-3d-stats/releases/download/v0.0.0/icon_3d_stats.png",
     "poster": "https://github.com/supervisely-ecosystem/project-3d-stats/releases/download/v0.0.0/poster_3d_stats.png",
     "context_menu": {
-      "target": ["point_cloud_project", "point_cloud_episodes_project"]
+        "target": [
+            "point_cloud_project",
+            "point_cloud_episodes_project"
+        ]
     },
     "min_agent_version": "6.6.7",
     "min_instance_version": "6.5.38",
     "entrypoint": "python -m uvicorn src.main:app --host 0.0.0.0 --port 8000",
     "port": 8000
-  }
+}
