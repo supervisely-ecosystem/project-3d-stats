@@ -2,7 +2,7 @@
     "name": "Project 3D statistics",
     "version": "2.0.0",
     "description": "Detailed statistics for all classes in pointcloud or episodes project",
-    "docker_image": "supervisely/visualization-stats:0.0.5",
+    "docker_image": "supervisely/visualization-stats:6.73.577",
     "categories": [
         "pointclouds",
         "visualization",
@@ -19,7 +19,7 @@
         ]
     },
     "min_agent_version": "6.6.7",
-    "min_instance_version": "6.5.38",
+    "instance_version": "6.16.19",
     "entrypoint": "python -m uvicorn src.main:app --host 0.0.0.0 --port 8000",
     "port": 8000
 }
